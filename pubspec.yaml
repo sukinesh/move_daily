@@ -30,14 +30,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.6
-  flutter_animate: ^4.5.0
+  # cupertino_icons: ^1.0.6
+  # flutter_animate: ^4.5.0
+  # google_fonts: any
+  # provider: any
 
   flutter_svg: any
   font_awesome_flutter: any
-  google_fonts: any
   percent_indicator: any
-  provider: any
+  firebase_core: ^2.31.1
+  cloud_firestore: ^4.17.4
 
 dev_dependencies:
   flutter_test:

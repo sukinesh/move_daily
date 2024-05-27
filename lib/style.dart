@@ -7,7 +7,7 @@ class AppColors {
   static const Color secondaryColor = Color(0xFFFF4400);
   static const Color primaryText = Color(0xFF0A0E21);
   static const Color secondaryText = Color(0xFFFFFFFF);
-  static const Color buttonColor = Color(0xFF4C4F5E);
+  static const Color divider = Color(0xFFDBE2E7);
 }
 
 class AppTextStyles {
@@ -17,7 +17,7 @@ class AppTextStyles {
     color: Colors.black,
   );
   static const TextStyle mediumBold = TextStyle(
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: FontWeight.bold,
     color: Colors.black,
   );
@@ -32,9 +32,15 @@ class AppTextStyles {
     color: AppColors.secondaryText,
   );
 
-  static const TextStyle headlineSmall = TextStyle(
-    fontSize: 16,
+  static const TextStyle title = TextStyle(
+    fontSize: 24,
     fontWeight: FontWeight.bold,
     color: Colors.black,
+  );
+
+  static const TextStyle titleWhite = TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
   );
 }

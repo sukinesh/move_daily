@@ -8,6 +8,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'style.dart';
 import 'calendar.dart';
 import 'profile.dart';
+import 'firebase_functions.dart';
 
 // import 'home_model.dart';
 // export 'home_model.dart';
@@ -84,11 +85,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
         automaticallyImplyLeading: false,
         title: const Text(
           "Move",
-          style: TextStyle(
-            fontFamily: 'Outfit',
-            letterSpacing: 0,
-            fontWeight: FontWeight.w800,
-          ),
+          style: AppTextStyles.title,
         ),
         actions: [
           Row(
@@ -147,65 +144,233 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Flexible(
-                child: Row(
-                  //streak bar
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                        child: Container(
-                      constraints: const BoxConstraints(
-                        maxWidth: 500,
-                        maxHeight: 150,
+              Row(
+                //streak bar box
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                      child: Container(
+                    constraints: const BoxConstraints(
+                      maxWidth: 600,
+                      maxHeight: 160,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.secondaryBg,
+                      borderRadius: BorderRadius.circular(12),
+                      shape: BoxShape.rectangle,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Streak Scale',
+                            style: AppTextStyles.smallBold,
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 12, 0, 12),
+                            child: LinearPercentIndicator(
+                              percent: 0.7,
+                              lineHeight: 16,
+                              animation: true,
+                              animateFromLastPercent: true,
+                              progressColor: AppColors.primaryColor,
+                              backgroundColor: AppColors.primaryBg,
+                              barRadius: const Radius.circular(16),
+                              padding: EdgeInsets.zero,
+                            ),
+                          ),
+                          const Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Noob',
+                                style: AppTextStyles.smallBold,
+                              ),
+                              Text(
+                                'Rookie',
+                                style: AppTextStyles.smallBold,
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
+                    ),
+                  )
+                      // .animateOnPageLoad(
+                      //     animationsMap['containerOnPageLoadAnimation']!),
+                      ),
+                ],
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              Row(
+                //image box
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: Container(
+                      width: 100,
                       decoration: BoxDecoration(
                         color: AppColors.secondaryBg,
                         borderRadius: BorderRadius.circular(12),
-                        shape: BoxShape.rectangle,
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(12),
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              'Streak Scale',
-                              style: AppTextStyles.smallBold,
+                              'Today\'s Task',
+                              style: AppTextStyles.mediumBold,
                             ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 12, 0, 12),
-                              child: LinearPercentIndicator(
-                                percent: 0.7,
-                                lineHeight: 16,
-                                animation: true,
-                                animateFromLastPercent: true,
-                                progressColor: AppColors.primaryColor,
-                                backgroundColor: AppColors.primaryBg,
-                                barRadius: const Radius.circular(16),
-                                padding: EdgeInsets.zero,
+                            SvgPicture.asset(
+                              'assets/exercises/pushup.svg',
+                              width: 300,
+                              height: 200,
+                              fit: BoxFit.fitHeight,
+                            ),
+                            const Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  20, 12, 20, 12),
+                              // child: FutureBuilder<List<DailyTaskRecord>>(
+                              //   future: queryDailyTaskRecordOnce(
+                              //     queryBuilder: (dailyTaskRecord) =>
+                              //         dailyTaskRecord.where(
+                              //       'date',
+                              //       isEqualTo: dateTimeFormat(
+                              //         'd/M/y',
+                              //         getCurrentTimestamp,
+                              //         locale: FFLocalizations.of(context)
+                              //             .languageCode,
+                              //       ),
+                              //     ),
+                              //     singleRecord: true,
+                              //   ),
+                              //   builder: (context, snapshot) {
+                              //     // Customize what your widget looks like when it's loading.
+                              //     if (!snapshot.hasData) {
+                              //       return Center(
+                              //         child: SizedBox(
+                              //           width: 50,
+                              //           height: 50,
+                              //           child: CircularProgressIndicator(
+                              //             valueColor:
+                              //                 AlwaysStoppedAnimation<Color>(
+                              //               FlutterFlowTheme.of(context)
+                              //                   .primary,
+                              //             ),
+                              //           ),
+                              //         ),
+                              //       );
+                              //     }
+                              //     List<DailyTaskRecord>
+                              //         rowDailyTaskRecordList = snapshot.data!;
+                              //     // Return an empty Container when the item does not exist.
+                              //     if (snapshot.data!.isEmpty) {
+                              //       return Container();
+                              //     }
+                              //     final rowDailyTaskRecord =
+                              //         rowDailyTaskRecordList.isNotEmpty
+                              //             ? rowDailyTaskRecordList.first
+                              //             : null;
+                              //     return const Row(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Push Ups",
+                                    // rowDailyTaskRecord!.task,
+                                    style: AppTextStyles.smallBold,
+                                  ),
+                                  Text('-', style: AppTextStyles.smallBold),
+                                  Text(
+                                    "100 reps",
+                                    // rowDailyTaskRecord!.reps,
+                                    style: AppTextStyles.smallBold,
+                                  ),
+                                ],
+                                // );
+                                // },
                               ),
                             ),
-                            const Row(
+                            Row(
+                              //completion Button
                               mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  'Noob',
-                                  style: TextStyle(
-                                    fontFamily: 'Outfit',
-                                    letterSpacing: 0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Text(
-                                  'Rookie',
-                                  style: TextStyle(
-                                    fontFamily: 'Outfit',
-                                    letterSpacing: 0,
-                                    fontWeight: FontWeight.w600,
+                                Expanded(
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            30, 12, 30, 12),
+                                    child: TextButton(
+                                      onPressed: () {
+                                        FirebaseFunctions().readData();
+                                      },
+                                      style: TextButton.styleFrom(
+                                          backgroundColor:
+                                              AppColors.primaryColor,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0))),
+                                      // onPressed: () async {
+                                      //   await showModalBottomSheet(
+                                      //     isScrollControlled: true,
+                                      //     backgroundColor: Colors.transparent,
+                                      //     enableDrag: false,
+                                      //     context: context,
+                                      //     builder: (context) {
+                                      //       return GestureDetector(
+                                      //         onTap: () => _model.unfocusNode
+                                      //                 .canRequestFocus
+                                      //             ? FocusScope.of(context)
+                                      //                 .requestFocus(
+                                      //                     _model.unfocusNode)
+                                      //             : FocusScope.of(context)
+                                      //                 .unfocus(),
+                                      //         child: Padding(
+                                      //           padding:
+                                      //               MediaQuery.viewInsetsOf(
+                                      //                   context),
+                                      //           child: SubmitActivityWidget(),
+                                      //         ),
+                                      //       );
+                                      //     },
+                                      //   ).then(
+                                      //       (value) => safeSetState(() {}));
+                                      // },
+
+                                      // style: FFButtonOptions(
+                                      //   height: 40,
+                                      //   padding: const EdgeInsetsDirectional
+                                      //       .fromSTEB(24, 0, 24, 0),
+                                      //   iconPadding:
+                                      //       const EdgeInsetsDirectional
+                                      //           .fromSTEB(0, 0, 0, 0),
+                                      //   color: AppColors.primaryColor,
+                                      //   textStyle: AppTextStyles.smallBold,
+                                      //   elevation: 3,
+                                      //   borderSide: const BorderSide(
+                                      //     color: Colors.transparent,
+                                      //     width: 1,
+                                      //   ),
+                                      //   borderRadius:
+                                      //       BorderRadius.circular(8),
+                                      // ),
+                                      child: const Text(
+                                        'Update Completion',
+                                        style: AppTextStyles.whiteBold,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ],
@@ -213,221 +378,19 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                           ],
                         ),
                       ),
-                    )
-                        // .animateOnPageLoad(
-                        //     animationsMap['containerOnPageLoadAnimation']!),
-                        ),
-                  ],
-                ),
-              ),
-              const Flexible(
-                //Todays task
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Today\'s Task',
-                        style: AppTextStyles.smallBold,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                //image box
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        width: 100,
-                        decoration: BoxDecoration(
-                          color: AppColors.secondaryBg,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: SvgPicture.asset(
-                                  'assets/exercises/pushup.svg',
-                                  width: 300,
-                                  height: 200,
-                                  fit: BoxFit.fitHeight,
-                                ),
-                              ),
-                              const Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    20, 12, 20, 12),
-                                // child: FutureBuilder<List<DailyTaskRecord>>(
-                                //   future: queryDailyTaskRecordOnce(
-                                //     queryBuilder: (dailyTaskRecord) =>
-                                //         dailyTaskRecord.where(
-                                //       'date',
-                                //       isEqualTo: dateTimeFormat(
-                                //         'd/M/y',
-                                //         getCurrentTimestamp,
-                                //         locale: FFLocalizations.of(context)
-                                //             .languageCode,
-                                //       ),
-                                //     ),
-                                //     singleRecord: true,
-                                //   ),
-                                //   builder: (context, snapshot) {
-                                //     // Customize what your widget looks like when it's loading.
-                                //     if (!snapshot.hasData) {
-                                //       return Center(
-                                //         child: SizedBox(
-                                //           width: 50,
-                                //           height: 50,
-                                //           child: CircularProgressIndicator(
-                                //             valueColor:
-                                //                 AlwaysStoppedAnimation<Color>(
-                                //               FlutterFlowTheme.of(context)
-                                //                   .primary,
-                                //             ),
-                                //           ),
-                                //         ),
-                                //       );
-                                //     }
-                                //     List<DailyTaskRecord>
-                                //         rowDailyTaskRecordList = snapshot.data!;
-                                //     // Return an empty Container when the item does not exist.
-                                //     if (snapshot.data!.isEmpty) {
-                                //       return Container();
-                                //     }
-                                //     final rowDailyTaskRecord =
-                                //         rowDailyTaskRecordList.isNotEmpty
-                                //             ? rowDailyTaskRecordList.first
-                                //             : null;
-                                //     return const Row(
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Push Ups",
-                                      // rowDailyTaskRecord!.task,
-                                      style: AppTextStyles.headlineSmall,
-                                    ),
-                                    Text('-',
-                                        style: AppTextStyles.headlineSmall),
-                                    Text(
-                                      "100 reps",
-                                      // rowDailyTaskRecord!.reps,
-                                      style: AppTextStyles.headlineSmall,
-                                    ),
-                                  ],
-                                  // );
-                                  // },
-                                ),
-                              ),
-                              Row(
-                                //completion Button
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Expanded(
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              30, 12, 30, 12),
-                                      child: TextButton(
-                                        onPressed: () => {},
-                                        style: TextButton.styleFrom(
-                                            backgroundColor:
-                                                AppColors.primaryColor,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        10.0))),
-                                        // onPressed: () async {
-                                        //   await showModalBottomSheet(
-                                        //     isScrollControlled: true,
-                                        //     backgroundColor: Colors.transparent,
-                                        //     enableDrag: false,
-                                        //     context: context,
-                                        //     builder: (context) {
-                                        //       return GestureDetector(
-                                        //         onTap: () => _model.unfocusNode
-                                        //                 .canRequestFocus
-                                        //             ? FocusScope.of(context)
-                                        //                 .requestFocus(
-                                        //                     _model.unfocusNode)
-                                        //             : FocusScope.of(context)
-                                        //                 .unfocus(),
-                                        //         child: Padding(
-                                        //           padding:
-                                        //               MediaQuery.viewInsetsOf(
-                                        //                   context),
-                                        //           child: SubmitActivityWidget(),
-                                        //         ),
-                                        //       );
-                                        //     },
-                                        //   ).then(
-                                        //       (value) => safeSetState(() {}));
-                                        // },
-
-                                        // style: FFButtonOptions(
-                                        //   height: 40,
-                                        //   padding: const EdgeInsetsDirectional
-                                        //       .fromSTEB(24, 0, 24, 0),
-                                        //   iconPadding:
-                                        //       const EdgeInsetsDirectional
-                                        //           .fromSTEB(0, 0, 0, 0),
-                                        //   color: AppColors.primaryColor,
-                                        //   textStyle: AppTextStyles.smallBold,
-                                        //   elevation: 3,
-                                        //   borderSide: const BorderSide(
-                                        //     color: Colors.transparent,
-                                        //     width: 1,
-                                        //   ),
-                                        //   borderRadius:
-                                        //       BorderRadius.circular(8),
-                                        // ),
-                                        child: const Text(
-                                          'Update Completion',
-                                          style: AppTextStyles.whiteBold,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: Text(
-                      "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-                      // dateTimeFormat(
-                      //   'd/M/y',
-                      //   getCurrentTimestamp,
-                      //   locale: FFLocalizations.of(context).languageCode,
-                      // ),
-                      style: AppTextStyles.headlineSmall,
                     ),
                   ),
                 ],
               ),
+              // Text(
+              //   "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
+              //   // dateTimeFormat(
+              //   //   'd/M/y',
+              //   //   getCurrentTimestamp,
+              //   //   locale: FFLocalizations.of(context).languageCode,
+              //   // ),
+              //   style: AppTextStyles.smallBold,
+              // ),
             ],
           ),
         ),

@@ -1,4 +1,4 @@
-package com.example.move_daily
+package smass.move
 
 import io.flutter.embedding.android.FlutterActivity
 
