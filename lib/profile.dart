@@ -151,7 +151,7 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin {
                       padding: EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
                       child: Text(
                         'Account Information',
-                        style: AppTextStyles.smallBold,
+                        // style: AppTextStyles.smallBold,
                       ),
                     ),
                     Padding(
@@ -201,7 +201,7 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                               child: Icon(
                                 Icons.arrow_forward_ios,
-                                color: AppColors.secondaryText,
+                                color: AppColors.icons,
                                 size: 24,
                               ),
                             ),
@@ -243,7 +243,7 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin {
                                 EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                             child: Icon(
                               Icons.arrow_forward_ios,
-                              color: AppColors.secondaryText,
+                              color: AppColors.icons,
                               size: 24,
                             ),
                           ),
@@ -322,7 +322,7 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin {
                                                     .fromSTEB(0, 0, 8, 0),
                                                 child: Icon(
                                                   Icons.nights_stay,
-                                                  color: Color(0xFF95A1AC),
+                                                  color: AppColors.icons,
                                                   size: 20,
                                                 ),
                                               ),
@@ -426,7 +426,7 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin {
                                                     .fromSTEB(8, 2, 0, 0),
                                                 child: Icon(
                                                   Icons.wb_sunny_rounded,
-                                                  color: Color(0xFF95A1AC),
+                                                  color: AppColors.icons,
                                                   size: 24,
                                                 ),
                                               ),

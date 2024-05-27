@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-// import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'style.dart';
-import 'calendar.dart';
+// import 'calendar.dart';
 import 'profile.dart';
-import 'firebase_functions.dart';
-
-// import 'home_model.dart';
-// export 'home_model.dart';
+// import 'splash_screen.dart';
+// import 'firebase_functions.dart';
+import 'login.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
@@ -21,62 +19,69 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
-  // late HomeModel _model;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // final animationsMap = <String, AnimationInfo>{};
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  Map<String, dynamic> task = {};
 
   @override
   void initState() {
     super.initState();
-    // _model = createModel(context, () => HomeModel());
-
-    // animationsMap.addAll({
-    //   'containerOnPageLoadAnimation': AnimationInfo(
-    //     trigger: AnimationTrigger.onPageLoad,
-    //     effectsBuilder: () => [
-    //       FadeEffect(
-    //         curve: Curves.easeInOut,
-    //         delay: 0.0.ms,
-    //         duration: 600.0.ms,
-    //         begin: 0.0,
-    //         end: 1.0,
-    //       ),
-    //       MoveEffect(
-    //         curve: Curves.easeInOut,
-    //         delay: 0.0.ms,
-    //         duration: 600.0.ms,
-    //         begin: const Offset(0.0, -40.0),
-    //         end: const Offset(0.0, 0.0),
-    //       ),
-    //     ],
-    //   ),
-    // });
-    // setupAnimations(
-    //   animationsMap.values.where((anim) =>
-    //       anim.trigger == AnimationTrigger.onActionTrigger ||
-    //       !anim.applyInitialState),
-    //   this,
-    // );
+    // fetchData();
   }
 
-  @override
-  void dispose() {
-    // _model.dispose();
+//this methor uses States to get and set tasks
+  Future<void> fetchData() async {
+    final today =
+        "${DateTime.now().day.toString().padLeft(2, '0')}/${DateTime.now().month.toString().padLeft(2, '0')}/${DateTime.now().year}";
 
-    super.dispose();
+    try {
+      print(today);
+      final querySnap = await _firestore
+          .collection('DailyTask')
+          .where("date", isEqualTo: today)
+          .get();
+
+      var data = querySnap.docs.map((doc) => doc.data()).toList();
+      print(data);
+      setState(() {
+        task = data[0];
+      });
+      // isLoading = false;
+    } catch (e) {
+      setState(() {
+        task = {'task': 'error', 'reps': '100'};
+      });
+      print("Error getting document: $e");
+    }
+  }
+
+//this methord uses future builder to set tasks
+  Future<Map<String, dynamic>> getData() async {
+    final today =
+        "${DateTime.now().day.toString().padLeft(2, '0')}/${DateTime.now().month.toString().padLeft(2, '0')}/${DateTime.now().year}";
+
+    try {
+      print(today);
+      final querySnap = await _firestore
+          .collection('DailyTask')
+          .where("date", isEqualTo: today)
+          .get();
+
+      var data = querySnap.docs.map((doc) => doc.data()).toList();
+      print(data);
+      return data[0];
+
+      // isLoading = false;
+    } catch (e) {
+      print("Error getting document: $e");
+
+      return {'task': 'error', 'reps': 'error'};
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // context.watch<FFAppState>();
-
-    // return GestureDetector(
-    // onTap: () => _model.unfocusNode.canRequestFocus
-    //     ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-    //     : FocusScope.of(context).unfocus(),
-    // child: Scaffold(
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: AppColors.primaryBg,
@@ -104,7 +109,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                 onPressed: () async {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Calender()),
+                    MaterialPageRoute(
+                        builder: (context) => const LoginWidget()),
                   );
                 },
               ),
@@ -237,72 +243,52 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                               height: 200,
                               fit: BoxFit.fitHeight,
                             ),
-                            const Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  20, 12, 20, 12),
-                              // child: FutureBuilder<List<DailyTaskRecord>>(
-                              //   future: queryDailyTaskRecordOnce(
-                              //     queryBuilder: (dailyTaskRecord) =>
-                              //         dailyTaskRecord.where(
-                              //       'date',
-                              //       isEqualTo: dateTimeFormat(
-                              //         'd/M/y',
-                              //         getCurrentTimestamp,
-                              //         locale: FFLocalizations.of(context)
-                              //             .languageCode,
-                              //       ),
-                              //     ),
-                              //     singleRecord: true,
-                              //   ),
-                              //   builder: (context, snapshot) {
-                              //     // Customize what your widget looks like when it's loading.
-                              //     if (!snapshot.hasData) {
-                              //       return Center(
-                              //         child: SizedBox(
-                              //           width: 50,
-                              //           height: 50,
-                              //           child: CircularProgressIndicator(
-                              //             valueColor:
-                              //                 AlwaysStoppedAnimation<Color>(
-                              //               FlutterFlowTheme.of(context)
-                              //                   .primary,
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       );
-                              //     }
-                              //     List<DailyTaskRecord>
-                              //         rowDailyTaskRecordList = snapshot.data!;
-                              //     // Return an empty Container when the item does not exist.
-                              //     if (snapshot.data!.isEmpty) {
-                              //       return Container();
-                              //     }
-                              //     final rowDailyTaskRecord =
-                              //         rowDailyTaskRecordList.isNotEmpty
-                              //             ? rowDailyTaskRecordList.first
-                              //             : null;
-                              //     return const Row(
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "Push Ups",
-                                    // rowDailyTaskRecord!.task,
-                                    style: AppTextStyles.smallBold,
-                                  ),
-                                  Text('-', style: AppTextStyles.smallBold),
-                                  Text(
-                                    "100 reps",
-                                    // rowDailyTaskRecord!.reps,
-                                    style: AppTextStyles.smallBold,
-                                  ),
-                                ],
-                                // );
-                                // },
-                              ),
-                            ),
+                            Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    20, 12, 20, 12),
+                                child: FutureBuilder<Map<String, dynamic>>(
+                                  future: getData(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<Map<String, dynamic>>
+                                          snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const CircularProgressIndicator(
+                                        color: AppColors.primaryColor,
+                                      ); // Show loading indicator
+                                    } else if (snapshot.hasError) {
+                                      return Text(
+                                          'Error: ${snapshot.error}'); // Show error message
+                                    } else if (snapshot.hasData) {
+                                      return Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            snapshot.data?['task'],
+                                            style: AppTextStyles.smallBold,
+                                          ),
+                                          const Text('-',
+                                              style: AppTextStyles.smallBold),
+                                          Text(
+                                            snapshot.data?['reps'],
+                                            // rowDailyTaskRecord!.reps,
+                                            style: AppTextStyles.smallBold,
+                                          ),
+                                        ],
+                                        // );
+                                        // },
+                                      );
+
+                                      // return Text(
+                                      //     'Data: ${snapshot.data}'); // Show data
+                                    } else {
+                                      return const Text(
+                                          'No data'); // Handle any other case
+                                    }
+                                  },
+                                )),
                             Row(
                               //completion Button
                               mainAxisSize: MainAxisSize.max,
@@ -314,7 +300,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                             30, 12, 30, 12),
                                     child: TextButton(
                                       onPressed: () {
-                                        FirebaseFunctions().readData();
+                                        fetchData();
+                                        print("running fetch");
                                       },
                                       style: TextButton.styleFrom(
                                           backgroundColor:
@@ -384,12 +371,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
               ),
               // Text(
               //   "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-              //   // dateTimeFormat(
-              //   //   'd/M/y',
-              //   //   getCurrentTimestamp,
-              //   //   locale: FFLocalizations.of(context).languageCode,
-              //   // ),
-              //   style: AppTextStyles.smallBold,
+              //     style: AppTextStyles.smallBold,
               // ),
             ],
           ),

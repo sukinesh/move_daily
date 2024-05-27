@@ -8,6 +8,8 @@ class AppColors {
   static const Color primaryText = Color(0xFF0A0E21);
   static const Color secondaryText = Color(0xFFFFFFFF);
   static const Color divider = Color(0xFFDBE2E7);
+  static const Color icons = Color(0xFF95A1AC);
+  static const Color buttonDark = Color(0xFF1A1F24);
 }
 
 class AppTextStyles {

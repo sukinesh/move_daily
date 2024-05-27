@@ -32,8 +32,8 @@ dependencies:
     sdk: flutter
   # cupertino_icons: ^1.0.6
   # flutter_animate: ^4.5.0
-  # google_fonts: any
-  # provider: any
+  google_fonts: any
+  provider: any
 
   flutter_svg: any
   font_awesome_flutter: any
