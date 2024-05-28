@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/scheduler.dart';
 
 import 'style.dart';
+import 'edit_profile.dart';
+import 'change_pass.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
@@ -81,7 +83,7 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin {
     //             height: 50,
     //             child: CircularProgressIndicator(
     //               valueColor: AlwaysStoppedAnimation<Color>(
-    //                 AppColors.primaryColor,
+    //                 AppColors.brand,
     //               ),
     //             ),
     //           ),
@@ -93,10 +95,10 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin {
       key: scaffoldKey,
       backgroundColor: AppColors.primaryBg,
       appBar: AppBar(
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.brand,
         automaticallyImplyLeading: false,
         leading: IconButton(
-          // borderColor: AppColors.primaryColor,
+          // borderColor: AppColors.brand,
           // borderRadius: 0,
           // borderWidth: 1,
           // buttonSize: 60,
@@ -162,7 +164,13 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin {
                         focusColor: Colors.transparent,
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) =>
+                                      const EditProfileWidget())));
+                        },
                         // async {
                         //   context.pushNamed(
                         //     'EditProfile',
@@ -221,7 +229,13 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin {
                       focusColor: Colors.transparent,
                       hoverColor: Colors.transparent,
                       highlightColor: Colors.transparent,
-                      onTap: () async {},
+                      onTap: () async {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const ChangePasswordWidget()));
+                      },
                       // context.pushNamed('ChangePassword');
                       // },
                       child: const Row(
@@ -269,7 +283,8 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin {
                               focusColor: Colors.transparent,
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
-                              onTap: () async {},
+                              onTap: () {},
+                              // async {},
                               //   setDarkModeSetting(
                               //       context, ThemeMode.dark);
                               //   if (animationsMap[

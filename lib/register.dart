@@ -1,6 +1,11 @@
 // import '/auth/firebase_auth/auth_util.dart';
 import 'package:flutter/material.dart';
+import 'package:move_daily/login.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:move_daily/splash_screen.dart';
+// import 'package:move_daily/login.dart';
 import 'style.dart';
+import 'package:move_daily/widgets.dart';
 
 class RegisterWidget extends StatefulWidget {
   const RegisterWidget({super.key});
@@ -41,321 +46,140 @@ class _RegisterWidgetState extends State<RegisterWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      // onTap: () => _model.unfocusNode.canRequestFocus
-      //     ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-      //     : FocusScope.of(context).unfocus(),
-      child: WillPopScope(
-        onWillPop: () async => false,
-        child: Scaffold(
-          key: scaffoldKey,
-          backgroundColor: AppColors.primaryBg,
-          body: SafeArea(
-            top: true,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.asset(
-                          'assets/images/move_logo-banner.png',
+    // return GestureDetector(
+    // onTap: () => _model.unfocusNode.canRequestFocus
+    //     ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+    //     : FocusScope.of(context).unfocus(),
+    // child:
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (boo) {
+        if (boo) return;
+        print(' back triggered ');
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const SplashScreenWidget()));
+      },
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: AppColors.secondaryBg,
+        body: SafeArea(
+          top: true,
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  color: AppColors.brand,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Image.asset(
+                          'assets/move_logo_banner.png',
                           width: MediaQuery.sizeOf(context).width,
                           fit: BoxFit.scaleDown,
                         ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              24, 0, 24, 36),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              TextFormField(
-                                // controller: _model.fullNameTextController,
-                                // focusNode: _model.fullNameFocusNode,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  labelText: 'Full Name',
-                                  hintText: 'Enter your name here...',
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: AppColors.secondaryBg,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  filled: true,
-                                  fillColor: AppColors.secondaryBg,
-                                ),
-                                style: AppTextStyles.mediumBold,
-                                keyboardType: TextInputType.emailAddress,
-                                // validator: _model
-                                //     .fullNameTextControllerValidator
-                                //     .asValidator(context),
-                              ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 20, 0, 0),
-                                child: TextFormField(
-                                  // controller: _model.emailTextController,
-                                  // focusNode: _model.textFieldFocusNode1,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    labelText: 'Email Address',
-                                    hintText: 'Enter your email here...',
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: AppColors.secondaryBg,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
+                                    24, 0, 24, 36),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    const BigTextField(
+                                      label: 'Full Name',
+                                      inputType: TextInputType.name,
                                     ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
+                                    const BigTextField(
+                                      label: 'Email Address',
+                                      inputType: TextInputType.emailAddress,
                                     ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
+                                    const BigTextField(
+                                      label: 'Password',
+                                      inputType: TextInputType.visiblePassword,
+                                      hideText: true,
                                     ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
+                                    const BigTextField(
+                                      label: 'Confirm Password',
+                                      inputType: TextInputType.visiblePassword,
+                                      hideText: true,
                                     ),
-                                    filled: true,
-                                    fillColor: AppColors.secondaryBg,
-                                  ),
-                                  style: AppTextStyles.mediumBold,
-                                  keyboardType: TextInputType.emailAddress,
-                                  // validator: _model.emailTextControllerValidator
-                                  //     .asValidator(context),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 20, 0, 0),
-                                child: TextFormField(
-                                  // controller: _model.passwordTextController,
-                                  // focusNode: _model.textFieldFocusNode2,
-                                  // obscureText: !_model.passwordVisibility1,
-                                  decoration: InputDecoration(
-                                    labelText: 'Password',
-                                    hintText: 'Enter your password here...',
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: AppColors.secondaryBg,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
+                                    BigButton(
+                                      label: 'Create Account',
+                                      color: AppColors.buttonDark,
+                                      textStyle: AppTextStyles.whiteBold,
+                                      handlePress: () {},
                                     ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        const Text(
+                                          'Already have an account?',
+                                          style: AppTextStyles.whiteBold,
+                                        ),
+                                        InkWell(
+                                          onTap: () => Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const LoginWidget())),
+                                          child: const Text(
+                                            'Login',
+                                            style: AppTextStyles.link,
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    filled: true,
-                                    fillColor: AppColors.secondaryBg,
-                                    suffixIcon: InkWell(
-                                      onTap: () {},
-                                      //  => setState(
-                                      // () => _model.passwordVisibility1 =
-                                      //     !_model.passwordVisibility1,
-                                      // ),
-                                      focusNode: FocusNode(skipTraversal: true),
-                                      child: const Icon(
-                                        // _model.passwordVisibility1
-                                        // ? Icons.visibility_outlined
-                                        // :
-                                        Icons.visibility_off_outlined,
-                                        color: Color(0x80FFFFFF),
-                                        size: 22,
-                                      ),
-                                    ),
-                                  ),
-                                  style: AppTextStyles.mediumBold,
-                                  // validator: _model
-                                  //     .passwordTextControllerValidator
-                                  //     .asValidator(context),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 20, 0, 0),
-                                child: TextFormField(
-                                  // controller:
-                                  //     _model.confirmPasswordTextController,
-                                  // focusNode: _model.textFieldFocusNode3,
-                                  // obscureText: !_model.passwordVisibility2,
-                                  decoration: InputDecoration(
-                                    labelText: 'Confirm Password',
-                                    hintText: 'Confirm password here...',
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: AppColors.secondaryBg,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    filled: true,
-                                    fillColor: AppColors.secondaryBg,
-                                    suffixIcon: InkWell(
-                                      onTap: () {},
-                                      // => setState(
-                                      //   () => _model.passwordVisibility2 =
-                                      //       !_model.passwordVisibility2,
-                                      // ),
-                                      focusNode: FocusNode(skipTraversal: true),
-                                      child: const Icon(
-                                        // _model.passwordVisibility2
-                                        //     ? Icons.visibility_outlined
-                                        //     :
-                                        Icons.visibility_off_outlined,
-                                        color: Color(0x80FFFFFF),
-                                        size: 22,
-                                      ),
-                                    ),
-                                  ),
-                                  style: AppTextStyles.mediumBold,
-                                  // validator: _model
-                                  //     .confirmPasswordTextControllerValidator
-                                  //     .asValidator(context),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 24, 0, 20),
-                                child: SizedBox(
-                                  width: 200,
-                                  height: 50,
-                                  child: ElevatedButton(
-                                    onPressed: () {},
-                                    // async {
-                                    //   GoRouter.of(context).prepareAuthEvent();
-                                    //   if (_model.passwordTextController.text !=
-                                    //       _model.confirmPasswordTextController
-                                    //           .text) {
-                                    //     ScaffoldMessenger.of(context)
-                                    //         .showSnackBar(
-                                    //       const SnackBar(
-                                    //         content: Text(
-                                    //           'Passwords don\'t match!',
-                                    //         ),
-                                    //       ),
-                                    //     );
-                                    //     return;
-                                    //   }
+                                    // BigButton(
+                                    //   label: 'Login',
+                                    //   color: AppColors.secondaryBg,
+                                    //   textStyle: AppTextStyles.brandText,
+                                    //   width: 150,
+                                    //   height: 40,
+                                    //   elevation: 0,
+                                    //   handlePress: () {},
+                                    // ),
+                                    const OrLine(),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        IconButton(
+                                          // borderColor: Color(0x00FF4D00),
+                                          // borderRadius: 20,
+                                          // borderWidth: 1,
+                                          // fillColor: Color(0x00616161),
+                                          icon: const FaIcon(
+                                            FontAwesomeIcons.google,
+                                            color: AppColors.secondaryText,
+                                            size: 40,
+                                          ),
+                                          onPressed: () {},
+                                          //  async {
+                                          //   GoRouter.of(context).prepareAuthEvent();
+                                          //   final user = await authManager.signInWithGoogle(context);
+                                          //   if (user == null) {
+                                          //     return;
+                                          //   }
 
-                                    //   final user = await authManager
-                                    //       .createAccountWithEmail(
-                                    //     context,
-                                    //     _model.emailTextController.text,
-                                    //     _model.passwordTextController.text,
-                                    //   );
-                                    //   if (user == null) {
-                                    //     return;
-                                    //   }
-
-                                    //   await UsersRecord.collection
-                                    //       .doc(user.uid)
-                                    //       .update(createUsersRecordData(
-                                    //         displayName: _model
-                                    //             .fullNameTextController.text,
-                                    //         email:
-                                    //             _model.emailTextController.text,
-                                    //       ));
-
-                                    //   context.goNamedAuth(
-                                    //       'Home', context.mounted);
-                                    // },
-                                    style: ElevatedButton.styleFrom(
-                                        elevation: 3,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        backgroundColor: AppColors.buttonDark),
-                                    child: const Text(
-                                      'Create Account',
-                                      style: AppTextStyles.smallBold,
+                                          //   context.goNamedAuth('Home', context.mounted);
+                                          // },
+                                        ),
+                                      ],
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -364,65 +188,13 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                       ],
                     ),
                   ),
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 6),
-                            child: Text(
-                              'Don’t have an account yet? ',
-                              style: AppTextStyles.mediumBold,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                0, 2, 0, 20),
-                            child: SizedBox(
-                              width: 80,
-                              height: 30,
-                              child: ElevatedButton(
-                                onPressed: () {},
-                                // async {
-                                //   context.pushNamed(
-                                //     'Login',
-                                //     extra: <String, dynamic>{
-                                //       kTransitionInfoKey: TransitionInfo(
-                                //         hasTransition: true,
-                                //         transitionType:
-                                //             PageTransitionType.fade,
-                                //         duration: const Duration(
-                                //             milliseconds: 200),
-                                //       ),
-                                //     },
-                                //   );
-                                // },
-                                style: ElevatedButton.styleFrom(
-                                    elevation: 3,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8)),
-                                    backgroundColor: AppColors.secondaryBg),
-                                child: const Text(
-                                  'Login',
-                                  style: AppTextStyles.smallBold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),
+      // ),
     );
   }
 }

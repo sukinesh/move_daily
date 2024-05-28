@@ -5,11 +5,11 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'style.dart';
-// import 'calendar.dart';
+import 'calendar.dart';
 import 'profile.dart';
 // import 'splash_screen.dart';
 // import 'firebase_functions.dart';
-import 'login.dart';
+// import 'login.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
@@ -110,7 +110,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const LoginWidget()),
+                        builder: (context) => const CalendarWidget()),
                   );
                 },
               ),
@@ -184,7 +184,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                               lineHeight: 16,
                               animation: true,
                               animateFromLastPercent: true,
-                              progressColor: AppColors.primaryColor,
+                              progressColor: AppColors.brand,
                               backgroundColor: AppColors.primaryBg,
                               barRadius: const Radius.circular(16),
                               padding: EdgeInsets.zero,
@@ -254,7 +254,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
                                       return const CircularProgressIndicator(
-                                        color: AppColors.primaryColor,
+                                        color: AppColors.brand,
                                       ); // Show loading indicator
                                     } else if (snapshot.hasError) {
                                       return Text(
@@ -304,8 +304,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                         print("running fetch");
                                       },
                                       style: TextButton.styleFrom(
-                                          backgroundColor:
-                                              AppColors.primaryColor,
+                                          backgroundColor: AppColors.brand,
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10.0))),
@@ -343,7 +342,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                       //   iconPadding:
                                       //       const EdgeInsetsDirectional
                                       //           .fromSTEB(0, 0, 0, 0),
-                                      //   color: AppColors.primaryColor,
+                                      //   color: AppColors.brand,
                                       //   textStyle: AppTextStyles.smallBold,
                                       //   elevation: 3,
                                       //   borderSide: const BorderSide(

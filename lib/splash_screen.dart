@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:move_daily/register.dart';
+import 'package:move_daily/login.dart';
+
 // import 'package:google_fonts/google_fonts.dart';
 
 import 'style.dart';
@@ -28,23 +31,24 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: AppColors.primaryText,
+      backgroundColor: AppColors.darkBg,
       body: SafeArea(
         top: true,
         child: Container(
           width: MediaQuery.sizeOf(context).width,
           height: MediaQuery.sizeOf(context).height * 1,
           decoration: BoxDecoration(
-            color: AppColors.primaryText,
+            color: AppColors.secondaryBg,
             image: DecorationImage(
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
+              // opacity: 0.9,
               image: Image.asset(
-                'assets/images/bg_login@2x.png',
+                'assets/banner_waves.png',
               ).image,
             ),
           ),
           child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+            padding: const EdgeInsetsDirectional.all(10),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -57,7 +61,7 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SvgPicture.asset(
-                        'assets/images/move_logo+_name.svg',
+                        'assets/move_logo+name.svg',
                         width: 240,
                         height: 240,
                         fit: BoxFit.cover,
@@ -66,44 +70,34 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
                   ),
                 ),
                 Expanded(
-                  child: Row(
+                  child: Column(
                     mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0, 2, 0, 20),
-                                child: SizedBox(
-                                  width: 200,
-                                  height: 50,
-                                  child: ElevatedButton(
-                                    onPressed: () {},
-                                    // async {
-                                    //   context.pushNamed('Register');
-                                    // },
-                                    style: ElevatedButton.styleFrom(
-                                        elevation: 3,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                        backgroundColor:
-                                            AppColors.primaryColor),
-                                    child: const Text(
-                                      'Register',
-                                      style: AppTextStyles.mediumBold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
+                        child: SizedBox(
+                          width: 200,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RegisterWidget()));
+                            },
+                            style: ElevatedButton.styleFrom(
+                                elevation: 3,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                                backgroundColor: AppColors.brand),
+                            child: const Text(
+                              'Register',
+                              style: AppTextStyles.whiteBold,
+                            ),
                           ),
                         ),
                       ),
@@ -114,18 +108,21 @@ class _SplashScreenWidgetState extends State<SplashScreenWidget> {
                             width: 200,
                             height: 50,
                             child: ElevatedButton(
-                              onPressed: () {},
-                              // async {
-                              //   context.pushNamed('Login');
-                              // },
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LoginWidget()));
+                              },
                               style: ElevatedButton.styleFrom(
                                   elevation: 3,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8)),
-                                  backgroundColor: AppColors.primaryColor),
+                                  backgroundColor: AppColors.brand),
                               child: const Text(
                                 'Login',
-                                style: AppTextStyles.mediumBold,
+                                style: AppTextStyles.whiteBold,
                               ),
                             ),
                           )),

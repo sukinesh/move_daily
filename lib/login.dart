@@ -1,7 +1,10 @@
 // import '/auth/firebase_auth/auth_util.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:move_daily/register.dart';
 import 'package:move_daily/style.dart';
+import 'package:move_daily/widgets.dart';
+import 'package:move_daily/splash_screen.dart';
 
 // import 'login_model.dart';
 // export 'login_model.dart';
@@ -39,135 +42,60 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: AppColors.primaryBg,
-      body: Form(
-        // key: _model.formKey,
-        autovalidateMode: AutovalidateMode.always,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.asset(
-                      'assets/images/move_logo-banner.png',
-                      width: MediaQuery.sizeOf(context).width,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (boo) {
+        if (boo) return;
+        print(' back triggered ');
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const SplashScreenWidget()));
+      },
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: AppColors.brand,
+        body: Form(
+          // key: _model.formKey,
+          autovalidateMode: AutovalidateMode.always,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.max,
                   children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            TextFormField(
-                              // controller: _model.emailTextController,
-                              // focusNode: _model.textFieldFocusNode1,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                labelText: 'Email Address',
-                                hintText: 'Your email...',
-                                hintStyle: AppTextStyles.mediumBold,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: AppColors.secondaryBg,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                errorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: const BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                filled: true,
-                                fillColor: AppColors.secondaryBg,
-                                prefixIcon: const Icon(
-                                  Icons.email_outlined,
-                                  color: AppColors.primaryBg,
-                                ),
-                              ),
-                              style: AppTextStyles.mediumBold,
-                              keyboardType: TextInputType.emailAddress,
-                              // validator: _model.emailTextControllerValidator
-                              // .asValidator(context),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                              child: TextFormField(
-                                // controller: _model.passwordTextController,
-                                // focusNode: _model.textFieldFocusNode2,
-                                // obscureText: !_model.passwordVisibility,
-                                decoration: InputDecoration(
-                                  labelText: 'Password',
-                                  hintText: 'Enter your password here...',
-                                  hintStyle: AppTextStyles.mediumBold,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: AppColors.secondaryBg,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  filled: true,
-                                  fillColor: AppColors.secondaryBg,
-                                  prefixIcon: const Icon(
-                                    Icons.lock_outline,
-                                    color: AppColors.primaryBg,
-                                  ),
-                                  suffixIcon: InkWell(
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.asset(
+                        'assets/move_logo_banner.png',
+                        width: MediaQuery.sizeOf(context).width,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              24, 0, 24, 0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              const BigTextField(
+                                  label: 'Email Address',
+                                  inputType: TextInputType.emailAddress),
+                              BigTextField(
+                                  label: 'Password',
+                                  inputType: TextInputType.visiblePassword,
+                                  hideText: true,
+                                  icon: InkWell(
                                     onTap: () {},
                                     //  setState(
                                     // () => _model.passwordVisibility =
@@ -179,144 +107,104 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       // ? Icons.visibility_outlined
                                       // : Icons.visibility_off_outlined,
                                       Icons.visibility_outlined,
-                                      color: Color(0x80FFFFFF),
+                                      color: AppColors.divider,
                                       size: 22,
                                     ),
-                                  ),
-                                ),
-                                style: AppTextStyles.mediumBold,
-                                //   validator: _model
-                                //       .passwordTextControllerValidator
-                                //       .asValidator(context),
+                                  )),
+                              BigButton(
+                                label: 'Login',
+                                color: AppColors.buttonDark,
+                                handlePress: () async {
+                                  // GoRouter.of(context).prepareAuthEvent();
+
+                                  // final user =
+                                  //     await authManager.signInWithEmail(
+                                  //   context,
+                                  //   _model.emailTextController.text,
+                                  //   _model.passwordTextController.text,
+                                  // );
+                                  // if (user == null) {
+                                  //   return;
+                                  // }
+
+                                  // context.goNamedAuth('Home', context.mounted);
+                                },
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0, 24, 0, 20),
-                              child: SizedBox(
-                                width: 200,
-                                height: 50,
-                                child: ElevatedButton(
-                                  onPressed: () {},
-                                  //     onPressed: () async {
-                                  //   GoRouter.of(context).prepareAuthEvent();
-
-                                  //   final user =
-                                  //       await authManager.signInWithEmail(
-                                  //     context,
-                                  //     _model.emailTextController.text,
-                                  //     _model.passwordTextController.text,
-                                  //   );
-                                  //   if (user == null) {
-                                  //     return;
-                                  //   }
-
-                                  //   context.goNamedAuth('Home', context.mounted);
-                                  // },
-                                  style: ElevatedButton.styleFrom(
-                                      elevation: 3,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8)),
-                                      backgroundColor: AppColors.buttonDark),
-                                  child: const Text(
-                                    'Login',
+                              Row(
+                                children: [
+                                  const Text(
+                                    'Don’t have an account yet? ',
                                     style: AppTextStyles.whiteBold,
                                   ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsetsDirectional.fromSTEB(0, 44, 0, 30),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  const Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 6),
-                                    child: Text(
-                                      'Don’t have an account yet? ',
-                                      style: AppTextStyles.mediumBold,
+                                  InkWell(
+                                    onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const RegisterWidget())),
+                                    child: const Text(
+                                      'Register',
+                                      style: AppTextStyles.link,
                                     ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0, 2, 0, 20),
-                                    child: SizedBox(
-                                      width: 100,
-                                      height: 32,
-                                      child: ElevatedButton(
-                                        onPressed: () {},
-                                        // async {
-                                        //   context.pushNamed(
-                                        //     'Register',
-                                        //     extra: <String, dynamic>{
-                                        //       kTransitionInfoKey: TransitionInfo(
-                                        //         hasTransition: true,
-                                        //         transitionType:
-                                        //             PageTransitionType.fade,
-                                        //         duration:
-                                        //             Duration(milliseconds: 200),
-                                        //       ),
-                                        //     },
-                                        //   );
-                                        // },
-                                        style: ElevatedButton.styleFrom(
-                                            elevation: 0,
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(8)),
-                                            backgroundColor:
-                                                AppColors.primaryColor),
-                                        child: const Text(
-                                          'Register',
-                                          style: AppTextStyles.mediumBold,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  )
                                 ],
                               ),
-                            ),
-                          ],
+                              // BigButton(
+                              //   label: 'Register',
+                              //   color: AppColors.secondaryBg,
+                              //   textStyle: AppTextStyles.brandText,
+                              //   handlePress: () async {
+                              //     //   context.pushNamed(
+                              //     //     'Register',
+                              //     //     extra: <String, dynamic>{
+                              //     //       kTransitionInfoKey: TransitionInfo(
+                              //     //         hasTransition: true,
+                              //     //         transitionType:
+                              //     //             PageTransitionType.fade,
+                              //     //         duration:
+                              //     //             Duration(milliseconds: 200),
+                              //     //       ),
+                              //     //     },
+                              //     //   );
+                              //   },
+                              // ),
+                            ],
+                          ),
                         ),
                       ),
+                    ],
+                  ),
+                ),
+                const OrLine(),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      // borderColor: Color(0x00FF4D00),
+                      // borderRadius: 20,
+                      // borderWidth: 1,
+                      // fillColor: Color(0x00616161),
+                      icon: const FaIcon(
+                        FontAwesomeIcons.google,
+                        color: AppColors.secondaryText,
+                        size: 40,
+                      ),
+                      onPressed: () {},
+                      //  async {
+                      //   GoRouter.of(context).prepareAuthEvent();
+                      //   final user = await authManager.signInWithGoogle(context);
+                      //   if (user == null) {
+                      //     return;
+                      //   }
+
+                      //   context.goNamedAuth('Home', context.mounted);
+                      // },
                     ),
                   ],
                 ),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    // borderColor: Color(0x00FF4D00),
-                    // borderRadius: 20,
-                    // borderWidth: 1,
-                    // fillColor: Color(0x00616161),
-                    icon: const FaIcon(
-                      FontAwesomeIcons.google,
-                      color: AppColors.secondaryText,
-                      size: 40,
-                    ),
-                    onPressed: () {},
-                    //  async {
-                    //   GoRouter.of(context).prepareAuthEvent();
-                    //   final user = await authManager.signInWithGoogle(context);
-                    //   if (user == null) {
-                    //     return;
-                    //   }
-
-                    //   context.goNamedAuth('Home', context.mounted);
-                    // },
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
