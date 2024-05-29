@@ -55,7 +55,15 @@ class AppTextStyles {
   static const TextStyle link = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
-    color: Colors.blue,
+    color: Color.fromARGB(255, 0, 50, 255),
     // decoration: TextDecoration.underline
+  );
+
+  static const TextStyle error = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+    color: Color.fromARGB(255, 255, 255, 255),
+    // backgroundColor: AppColors.dividerr
+    // background:
   );
 }

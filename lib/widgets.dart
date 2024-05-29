@@ -9,6 +9,8 @@ class BigTextField extends StatelessWidget {
   final TextInputType inputType;
   final bool hideText;
   final Widget? icon;
+  final TextEditingController controller;
+  final String? Function(String?)? validator;
 
   const BigTextField(
       {super.key,
@@ -18,20 +20,24 @@ class BigTextField extends StatelessWidget {
       this.borderRadius = 8,
       required this.inputType,
       this.hideText = false,
-      this.icon});
+      this.icon,
+      required this.controller,
+      this.validator});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
       child: TextFormField(
-        // controller: _model.fullNameTextController,
+        controller: controller,
         // focusNode: _model.fullNameFocusNode,
         obscureText: hideText,
+        // cursorColor: Colors.black,
         decoration: InputDecoration(
           labelText: label,
           floatingLabelStyle: AppTextStyles.label,
           hintText: hint,
+          errorStyle: AppTextStyles.error,
           filled: true,
           suffixIcon: icon,
           fillColor: AppColors.secondaryBg,
@@ -51,8 +57,8 @@ class BigTextField extends StatelessWidget {
           ),
           errorBorder: OutlineInputBorder(
             borderSide: const BorderSide(
-              color: Color(0x00000000),
-              width: 1,
+              color: Color(0xffff0000),
+              width: 3,
             ),
             borderRadius: BorderRadius.circular(8),
           ),
@@ -66,10 +72,7 @@ class BigTextField extends StatelessWidget {
         ),
         style: AppTextStyles.mediumBold,
         keyboardType: inputType,
-
-        // validator: _model
-        //     .fullNameTextControllerValidator
-        //     .asValidator(context),
+        validator: validator,
       ),
     );
   }

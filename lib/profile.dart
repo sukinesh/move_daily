@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:move_daily/widgets.dart';
 // import 'package:flutter/scheduler.dart';
 
 import 'style.dart';
@@ -501,31 +503,13 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                        child: SizedBox(
-                          height: 50,
-                          width: 130,
-                          child: ElevatedButton(
-                            onPressed: () async {},
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8))),
-                            //   GoRouter.of(context).prepareAuthEvent();
-                            //   await authManager.signOut();
-                            //   GoRouter.of(context).clearRedirectLocation();
-
-                            //   context.goNamedAuth(
-                            //       'SplashScreen', context.mounted);
-                            // },
-                            child: const Text(
-                              'Log Out',
-                              style: AppTextStyles.mediumBold,
-                            ),
-                          ),
-                        ),
-                      ),
+                      BigButton(
+                          label: "Log Out",
+                          color: AppColors.secondaryBg,
+                          textStyle: AppTextStyles.mediumBold,
+                          handlePress: () {
+                            FirebaseAuth.instance.signOut();
+                          }),
                       // ),
                       const Text(
                         'App Version v0.0',

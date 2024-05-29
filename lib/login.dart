@@ -1,10 +1,14 @@
 // import '/auth/firebase_auth/auth_util.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:move_daily/home.dart';
 import 'package:move_daily/register.dart';
 import 'package:move_daily/style.dart';
 import 'package:move_daily/widgets.dart';
 import 'package:move_daily/splash_screen.dart';
+import 'package:move_daily/tools.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
 
 // import 'login_model.dart';
 // export 'login_model.dart';
@@ -21,16 +25,15 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
-    // _model = createModel(context, () => LoginModel());
-
-    // _model.emailTextController ??= TextEditingController();
-    // _model.textFieldFocusNode1 ??= FocusNode();
-
-    // _model.passwordTextController ??= TextEditingController();
-    // _model.textFieldFocusNode2 ??= FocusNode();
   }
 
   @override
@@ -85,90 +88,120 @@ class _LoginWidgetState extends State<LoginWidget> {
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               24, 0, 24, 0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              const BigTextField(
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                BigTextField(
                                   label: 'Email Address',
-                                  inputType: TextInputType.emailAddress),
-                              BigTextField(
-                                  label: 'Password',
-                                  inputType: TextInputType.visiblePassword,
-                                  hideText: true,
-                                  icon: InkWell(
-                                    onTap: () {},
-                                    //  setState(
-                                    // () => _model.passwordVisibility =
-                                    //     !_model.passwordVisibility,
-                                    // ),
-                                    focusNode: FocusNode(skipTraversal: true),
-                                    child: const Icon(
-                                      // _model.passwordVisibility
-                                      // ? Icons.visibility_outlined
-                                      // : Icons.visibility_off_outlined,
-                                      Icons.visibility_outlined,
-                                      color: AppColors.divider,
-                                      size: 22,
-                                    ),
-                                  )),
-                              BigButton(
-                                label: 'Login',
-                                color: AppColors.buttonDark,
-                                handlePress: () async {
-                                  // GoRouter.of(context).prepareAuthEvent();
+                                  inputType: TextInputType.emailAddress,
+                                  controller: emailController,
+                                  validator: emailValidator,
+                                ),
+                                BigTextField(
+                                    label: 'Password',
+                                    inputType: TextInputType.visiblePassword,
+                                    hideText: true,
+                                    controller: passController,
+                                    validator: passValidator,
+                                    icon: InkWell(
+                                      onTap: () {},
+                                      //  setState(
+                                      // () => _model.passwordVisibility =
+                                      //     !_model.passwordVisibility,
+                                      // ),
+                                      focusNode: FocusNode(skipTraversal: true),
+                                      child: const Icon(
+                                        // _model.passwordVisibility
+                                        // ? Icons.visibility_outlined
+                                        // : Icons.visibility_off_outlined,
+                                        Icons.visibility_outlined,
+                                        color: AppColors.divider,
+                                        size: 22,
+                                      ),
+                                    )),
+                                BigButton(
+                                  label: 'Login',
+                                  color: AppColors.buttonDark,
+                                  handlePress: () async {
+                                    if (_formKey.currentState?.validate() ??
+                                        false) {
+                                      try {
+                                        print(
+                                            ' ${emailController.text} - ${passController.text}');
+                                        await FirebaseAuth.instance
+                                            .signInWithEmailAndPassword(
+                                          email: emailController.text,
+                                          password: passController.text,
+                                          // email: 'test@gmail.com',
+                                          // password: 'password'
+                                        );
+                                        print('logged in');
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const HomeWidget()));
+                                      } on FirebaseAuthException catch (e) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                              content: Text(
+                                                  errorCodeProcessor(e.code))),
+                                        );
 
-                                  // final user =
-                                  //     await authManager.signInWithEmail(
-                                  //   context,
-                                  //   _model.emailTextController.text,
-                                  //   _model.passwordTextController.text,
-                                  // );
-                                  // if (user == null) {
-                                  //   return;
-                                  // }
-
-                                  // context.goNamedAuth('Home', context.mounted);
-                                },
-                              ),
-                              Row(
-                                children: [
-                                  const Text(
-                                    'Don’t have an account yet? ',
-                                    style: AppTextStyles.whiteBold,
-                                  ),
-                                  InkWell(
-                                    onTap: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const RegisterWidget())),
-                                    child: const Text(
-                                      'Register',
-                                      style: AppTextStyles.link,
+                                        print('logging error: ${e}');
+                                      }
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                            content: Text('Not a valid input')),
+                                      );
+                                    }
+                                  },
+                                ),
+                                Row(
+                                  children: [
+                                    const Text(
+                                      'Don’t have an account yet? ',
+                                      style: AppTextStyles.whiteBold,
                                     ),
-                                  )
-                                ],
-                              ),
-                              // BigButton(
-                              //   label: 'Register',
-                              //   color: AppColors.secondaryBg,
-                              //   textStyle: AppTextStyles.brandText,
-                              //   handlePress: () async {
-                              //     //   context.pushNamed(
-                              //     //     'Register',
-                              //     //     extra: <String, dynamic>{
-                              //     //       kTransitionInfoKey: TransitionInfo(
-                              //     //         hasTransition: true,
-                              //     //         transitionType:
-                              //     //             PageTransitionType.fade,
-                              //     //         duration:
-                              //     //             Duration(milliseconds: 200),
-                              //     //       ),
-                              //     //     },
-                              //     //   );
-                              //   },
-                              // ),
-                            ],
+                                    InkWell(
+                                      onTap: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const RegisterWidget())),
+                                      child: const Text(
+                                        'Register',
+                                        style: AppTextStyles.link,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                // BigButton(
+                                //   label: 'Register',
+                                //   color: AppColors.secondaryBg,
+                                //   textStyle: AppTextStyles.brandText,
+                                //   handlePress: () async {
+                                //     //   context.pushNamed(
+                                //     //     'Register',
+                                //     //     extra: <String, dynamic>{
+                                //     //       kTransitionInfoKey: TransitionInfo(
+                                //     //         hasTransition: true,
+                                //     //         transitionType:
+                                //     //             PageTransitionType.fade,
+                                //     //         duration:
+                                //     //             Duration(milliseconds: 200),
+                                //     //       ),
+                                //     //     },
+                                //     //   );
+                                //   },
+                                // ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -190,7 +223,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                         color: AppColors.secondaryText,
                         size: 40,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        FirebaseAuth.instance.signOut();
+                      },
                       //  async {
                       //   GoRouter.of(context).prepareAuthEvent();
                       //   final user = await authManager.signInWithGoogle(context);
