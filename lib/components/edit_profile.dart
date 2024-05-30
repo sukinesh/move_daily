@@ -1,6 +1,6 @@
 // import '/auth/firebase_auth/auth_util.dart';
 import 'package:flutter/material.dart';
-import 'style.dart';
+import '../functions/style.dart';
 
 //dummy class
 class UsersRecord {}

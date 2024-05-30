@@ -1,13 +1,14 @@
 // import '/auth/firebase_auth/auth_util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:move_daily/login.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:move_daily/splash_screen.dart';
+import 'package:move_daily/routes/home.dart';
+import 'package:move_daily/routes/login.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:move_daily/routes/splash_screen.dart';
 // import 'package:move_daily/login.dart';
-import 'style.dart';
-import 'package:move_daily/widgets.dart';
-import 'package:move_daily/tools.dart';
+import '../functions/style.dart';
+import 'package:move_daily/functions/widgets.dart';
+import 'package:move_daily/functions/tools.dart';
 
 class RegisterWidget extends StatefulWidget {
   const RegisterWidget({super.key});
@@ -54,6 +55,10 @@ class _RegisterWidgetState extends State<RegisterWidget> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      debugPrint('user: $user');
+    });
+
     // return GestureDetector(
     // onTap: () => _model.unfocusNode.canRequestFocus
     //     ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -148,6 +153,12 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                                                             .text,
                                                         password: passController
                                                             .text);
+                                                Navigator.pushAndRemoveUntil(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const HomeWidget()),
+                                                    (route) => false);
                                               } on FirebaseAuthException catch (e) {
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(
@@ -185,7 +196,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         const LoginWidget())),
-                                            child: const Text(
+                                            child: Text(
                                               'Login',
                                               style: AppTextStyles.link,
                                             ),
@@ -201,35 +212,35 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                                       //   elevation: 0,
                                       //   handlePress: () {},
                                       // ),
-                                      const OrLine(),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          IconButton(
-                                            // borderColor: Color(0x00FF4D00),
-                                            // borderRadius: 20,
-                                            // borderWidth: 1,
-                                            // fillColor: Color(0x00616161),
-                                            icon: const FaIcon(
-                                              FontAwesomeIcons.google,
-                                              color: AppColors.secondaryText,
-                                              size: 40,
-                                            ),
-                                            onPressed: () {},
-                                            //  async {
-                                            //   GoRouter.of(context).prepareAuthEvent();
-                                            //   final user = await authManager.signInWithGoogle(context);
-                                            //   if (user == null) {
-                                            //     return;
-                                            //   }
+                                      // const OrLine(),
+                                      // Row(
+                                      //   mainAxisSize: MainAxisSize.max,
+                                      //   mainAxisAlignment:
+                                      //       MainAxisAlignment.center,
+                                      //   children: [
+                                      //     IconButton(
+                                      //       // borderColor: Color(0x00FF4D00),
+                                      //       // borderRadius: 20,
+                                      //       // borderWidth: 1,
+                                      //       // fillColor: Color(0x00616161),
+                                      //       icon: const FaIcon(
+                                      //         FontAwesomeIcons.google,
+                                      //         color: AppColors.secondaryText,
+                                      //         size: 40,
+                                      //       ),
+                                      //       onPressed: () {},
+                                      //       //  async {
+                                      //       //   GoRouter.of(context).prepareAuthEvent();
+                                      //       //   final user = await authManager.signInWithGoogle(context);
+                                      //       //   if (user == null) {
+                                      //       //     return;
+                                      //       //   }
 
-                                            //   context.goNamedAuth('Home', context.mounted);
-                                            // },
-                                          ),
-                                        ],
-                                      ),
+                                      //       //   context.goNamedAuth('Home', context.mounted);
+                                      //       // },
+                                      //     ),
+                                      //   ],
+                                      // ),
                                     ],
                                   ),
                                 ),

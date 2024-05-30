@@ -1,17 +1,14 @@
 // import '/auth/firebase_auth/auth_util.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:move_daily/home.dart';
-import 'package:move_daily/register.dart';
-import 'package:move_daily/style.dart';
-import 'package:move_daily/widgets.dart';
-import 'package:move_daily/splash_screen.dart';
-import 'package:move_daily/tools.dart';
+import 'package:move_daily/routes/home.dart';
+import 'package:move_daily/routes/register.dart';
+import 'package:move_daily/functions/style.dart';
+import 'package:move_daily/functions/widgets.dart';
+import 'package:move_daily/routes/splash_screen.dart';
+import 'package:move_daily/functions/tools.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-
-// import 'login_model.dart';
-// export 'login_model.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
@@ -21,13 +18,12 @@ class LoginWidget extends StatefulWidget {
 }
 
 class _LoginWidgetState extends State<LoginWidget> {
-  // late LoginModel _model;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   final FirebaseAuth auth = FirebaseAuth.instance;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
+  bool passVisibility = true;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -38,8 +34,6 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   void dispose() {
-    // _model.dispose();
-
     super.dispose();
   }
 
@@ -49,7 +43,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       canPop: false,
       onPopInvoked: (boo) {
         if (boo) return;
-        print(' back triggered ');
+        debugPrint(' back triggered ');
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -59,7 +53,6 @@ class _LoginWidgetState extends State<LoginWidget> {
         key: scaffoldKey,
         backgroundColor: AppColors.brand,
         body: Form(
-          // key: _model.formKey,
           autovalidateMode: AutovalidateMode.always,
           child: SingleChildScrollView(
             child: Column(
@@ -102,21 +95,18 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 BigTextField(
                                     label: 'Password',
                                     inputType: TextInputType.visiblePassword,
-                                    hideText: true,
+                                    hideText: passVisibility,
                                     controller: passController,
                                     validator: passValidator,
                                     icon: InkWell(
-                                      onTap: () {},
-                                      //  setState(
-                                      // () => _model.passwordVisibility =
-                                      //     !_model.passwordVisibility,
-                                      // ),
+                                      onTap: () => setState(
+                                        () => passVisibility = !passVisibility,
+                                      ),
                                       focusNode: FocusNode(skipTraversal: true),
-                                      child: const Icon(
-                                        // _model.passwordVisibility
-                                        // ? Icons.visibility_outlined
-                                        // : Icons.visibility_off_outlined,
-                                        Icons.visibility_outlined,
+                                      child: Icon(
+                                        passVisibility
+                                            ? Icons.visibility_outlined
+                                            : Icons.visibility_off_outlined,
                                         color: AppColors.divider,
                                         size: 22,
                                       ),
@@ -128,7 +118,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     if (_formKey.currentState?.validate() ??
                                         false) {
                                       try {
-                                        print(
+                                        debugPrint(
                                             ' ${emailController.text} - ${passController.text}');
                                         await FirebaseAuth.instance
                                             .signInWithEmailAndPassword(
@@ -137,12 +127,14 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           // email: 'test@gmail.com',
                                           // password: 'password'
                                         );
-                                        print('logged in');
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const HomeWidget()));
+                                        debugPrint('logged in');
+                                        Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const HomeWidget()),
+                                          (route) => false,
+                                        );
                                       } on FirebaseAuthException catch (e) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
@@ -151,7 +143,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   errorCodeProcessor(e.code))),
                                         );
 
-                                        print('logging error: ${e}');
+                                        debugPrint('logging error: $e');
                                       }
                                     } else {
                                       ScaffoldMessenger.of(context)
@@ -174,7 +166,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   const RegisterWidget())),
-                                      child: const Text(
+                                      child: Text(
                                         'Register',
                                         style: AppTextStyles.link,
                                       ),
@@ -209,35 +201,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
                 ),
                 const OrLine(),
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      // borderColor: Color(0x00FF4D00),
-                      // borderRadius: 20,
-                      // borderWidth: 1,
-                      // fillColor: Color(0x00616161),
-                      icon: const FaIcon(
-                        FontAwesomeIcons.google,
-                        color: AppColors.secondaryText,
-                        size: 40,
-                      ),
-                      onPressed: () {
-                        FirebaseAuth.instance.signOut();
-                      },
-                      //  async {
-                      //   GoRouter.of(context).prepareAuthEvent();
-                      //   final user = await authManager.signInWithGoogle(context);
-                      //   if (user == null) {
-                      //     return;
-                      //   }
-
-                      //   context.goNamedAuth('Home', context.mounted);
-                      // },
-                    ),
-                  ],
-                ),
+                const GoogleButton()
               ],
             ),
           ),

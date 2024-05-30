@@ -52,10 +52,10 @@ class AppTextStyles {
     color: Colors.grey,
   );
 
-  static const TextStyle link = TextStyle(
+  static TextStyle link = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
-    color: Color.fromARGB(255, 0, 50, 255),
+    color: Colors.blue.shade800,
     // decoration: TextDecoration.underline
   );
 

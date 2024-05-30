@@ -1,6 +1,6 @@
 // import '/auth/firebase_auth/auth_util.dart';
 import 'package:flutter/material.dart';
-import 'style.dart';
+import '../functions/style.dart';
 
 class ChangePasswordWidget extends StatefulWidget {
   const ChangePasswordWidget({super.key});
@@ -130,8 +130,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
                         child: Text(
                           'Enter your email and we will send a reset password link to your email for you to update it.',
                           style: AppTextStyles.smallBold,

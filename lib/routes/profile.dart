@@ -1,11 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:move_daily/widgets.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+import 'package:move_daily/routes/splash_screen.dart';
+import 'package:move_daily/functions/tools.dart';
+import 'package:move_daily/functions/firebase_functions.dart';
+
+import 'package:move_daily/functions/widgets.dart';
 // import 'package:flutter/scheduler.dart';
 
-import 'style.dart';
-import 'edit_profile.dart';
-import 'change_pass.dart';
+import '../functions/style.dart';
+import '../components/edit_profile.dart';
+import '../components/change_pass.dart';
 
 class MyProfile extends StatefulWidget {
   const MyProfile({super.key});
@@ -26,41 +32,6 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     // _model = createModel(context, () => MyProfileModel());
-
-    // animationsMap.addAll({
-    //   'containerOnActionTriggerAnimation1': AnimationInfo(
-    //     trigger: AnimationTrigger.onActionTrigger,
-    //     applyInitialState: false,
-    //     effectsBuilder: () => [
-    //       MoveEffect(
-    //         curve: Curves.easeInOut,
-    //         delay: 0.0.ms,
-    //         duration: 350.0.ms,
-    //         begin: Offset(40.0, 0.0),
-    //         end: Offset(0.0, 0.0),
-    //       ),
-    //     ],
-    //   ),
-    //   'containerOnActionTriggerAnimation2': AnimationInfo(
-    //     trigger: AnimationTrigger.onActionTrigger,
-    //     applyInitialState: false,
-    //     effectsBuilder: () => [
-    //       MoveEffect(
-    //         curve: Curves.easeInOut,
-    //         delay: 0.0.ms,
-    //         duration: 350.0.ms,
-    //         begin: Offset(-40.0, 0.0),
-    //         end: Offset(0.0, 0.0),
-    //       ),
-    //     ],
-    //   ),
-    // });
-    // setupAnimations(
-    //   animationsMap.values.where((anim) =>
-    //       anim.trigger == AnimationTrigger.onActionTrigger ||
-    //       !anim.applyInitialState),
-    //   this,
-    // );
   }
 
   @override
@@ -114,8 +85,8 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
-          "Display Name",
+        title: Text(
+          '${FirebaseFunctions().getCurrentUser()['name']}',
           // myProfileUsersRecord.displayName,
           style: AppTextStyles.titleWhite,
         ),
@@ -507,8 +478,25 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin {
                           label: "Log Out",
                           color: AppColors.secondaryBg,
                           textStyle: AppTextStyles.mediumBold,
-                          handlePress: () {
-                            FirebaseAuth.instance.signOut();
+                          handlePress: () async {
+                            try {
+                              await FirebaseAuth.instance.signOut();
+                              await GoogleSignIn().signOut();
+
+                              debugPrint('Logged out');
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const SplashScreenWidget()),
+                                (route) => false,
+                              );
+                            } on FirebaseAuthException catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content:
+                                          Text(errorCodeProcessor(e.code))));
+                            }
                           }),
                       // ),
                       const Text(

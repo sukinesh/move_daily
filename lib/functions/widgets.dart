@@ -1,5 +1,10 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
-import 'package:move_daily/style.dart';
+import 'package:move_daily/functions/style.dart';
+import 'package:move_daily/routes/home.dart';
 
 class BigTextField extends StatelessWidget {
   final Color color;
@@ -148,6 +153,80 @@ class OrLine extends StatelessWidget {
             thickness: 1.5,
           ))
         ],
+      ),
+    );
+  }
+}
+
+Future<User?> signInWithGoogle() async {
+  // Trigger the authentication flow
+  final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  // Obtain the auth details from the request
+  final GoogleSignInAuthentication? googleAuth =
+      await googleUser?.authentication;
+  if (googleUser == null) {
+    // User canceled the sign-in
+    return null;
+  }
+  // Create a new credential
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth?.accessToken,
+    idToken: googleAuth?.idToken,
+  );
+
+  // Once signed in, return the UserCredential
+  UserCredential userCredential =
+      await FirebaseAuth.instance.signInWithCredential(credential);
+  return userCredential.user;
+}
+
+class GoogleButton extends StatelessWidget {
+  const GoogleButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20),
+      child: SizedBox(
+        width: 250,
+        height: 60,
+        child: ElevatedButton(
+          onPressed: () async {
+            var user = await signInWithGoogle();
+
+            debugPrint('result is $user');
+            if (user != null) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const HomeWidget()),
+                (route) => false,
+              );
+            }
+          },
+          style: ElevatedButton.styleFrom(
+            elevation: 3,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            backgroundColor: AppColors.secondaryBg,
+          ),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'continue with ',
+                style: AppTextStyles.mediumBold,
+              ),
+              FaIcon(
+                FontAwesomeIcons.google,
+                color: AppColors.brand,
+                size: 40,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

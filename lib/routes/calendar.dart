@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:move_daily/style.dart';
+import 'package:move_daily/functions/style.dart';
 
 class CalendarWidget extends StatefulWidget {
   const CalendarWidget({super.key});
