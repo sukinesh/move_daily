@@ -209,8 +209,6 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin {
                                 builder: (context) =>
                                     const ChangePasswordWidget()));
                       },
-                      // context.pushNamed('ChangePassword');
-                      // },
                       child: const Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -499,11 +497,11 @@ class _MyProfileState extends State<MyProfile> with TickerProviderStateMixin {
                             }
                           }),
                       // ),
-                      const Text(
-                        'App Version v0.0',
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.smallBold,
-                      ),
+                      // const Text(
+                      //   'App Version v0.0',
+                      //   textAlign: TextAlign.center,
+                      //   style: AppTextStyles.smallBold,
+                      // ),
                     ],
                   ),
                 ),

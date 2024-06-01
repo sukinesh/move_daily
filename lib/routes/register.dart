@@ -31,19 +31,6 @@ class _RegisterWidgetState extends State<RegisterWidget> {
   @override
   void initState() {
     super.initState();
-    // _model = createModel(context, () => RegisterModel());
-
-    // _model.fullNameTextController ??= TextEditingController();
-    // _model.fullNameFocusNode ??= FocusNode();
-
-    // _model.emailTextController ??= TextEditingController();
-    // _model.textFieldFocusNode1 ??= FocusNode();
-
-    // _model.passwordTextController ??= TextEditingController();
-    // _model.textFieldFocusNode2 ??= FocusNode();
-
-    // _model.confirmPasswordTextController ??= TextEditingController();
-    // _model.textFieldFocusNode3 ??= FocusNode();
   }
 
   @override

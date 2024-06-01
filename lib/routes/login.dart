@@ -1,6 +1,6 @@
 // import '/auth/firebase_auth/auth_util.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:move_daily/routes/home.dart';
 import 'package:move_daily/routes/register.dart';
 import 'package:move_daily/functions/style.dart';
