@@ -16,4 +16,12 @@ this Project is done in 3 steps
 
 - [x] create basic layout
 - [ ] complete UI
-  - [x] add completion comp
+  - [ ] Calender page
+  - [ ] Add profile details on profile create
+  - [ ] edit profile page - autofill fields
+  - [ ] Dark mode switch functionable / remove
+  - [ ] Profile pic
+  - [ ] sstreak scale functionable
+  - [ ] add completion Pop up component
+  - [ ] streak page -> streak detrails & video
+  
