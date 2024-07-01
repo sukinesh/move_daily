@@ -14,4 +14,5 @@ this Project is done in 3 steps
 
 # Tasks
 
-- [ ] complete UI
+[x] create basic layout
+- [] complete UI
