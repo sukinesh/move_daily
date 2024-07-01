@@ -16,3 +16,4 @@ this Project is done in 3 steps
 
 - [x] create basic layout
 - [ ] complete UI
+  - [ ] add completion comp
